@@ -15,12 +15,12 @@
 apiVersion: dlp.cnrm.cloud.google.com/v1beta1
 kind: DLPDeidentifyTemplate
 metadata:
-  name: dlpdeidentifytemplate-${uniqueId}
+  name: multiregiondlpdeidentifytemplate-${uniqueId}
 spec:
   organizationRef:
     external: "organizations/${TEST_ORG_ID}"
   location: "us"
-  displayName: "sample-template-us"
+  displayName: "sample-multiregion-template"
   description: "A sample deidentify template in US multi-region"
   deidentifyConfig:
     recordTransformations:
