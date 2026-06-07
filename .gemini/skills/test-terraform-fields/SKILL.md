@@ -176,6 +176,10 @@ If the mock test fails or produces a diff against the baseline golden logs, appl
      ```
   2. Extract resource IDs from the request URL path (e.g. matching `/changes/<id>`) instead of response bodies, as URL paths are not mutated by the legacy normalizer.
 
+### E. Avoid LRO Waiting in Mock Workflows (Mock GCP Performance & Flake Prevention)
+- **Problem**: When implementing internal mock workflows (such as project setup, default network generation, or route creation), sequentially blocking on long-running operations using `.Wait(ctx)` or `op.Wait(ctx)` will easily trigger the test harness's hardcoded **10-second project creation timeout** or the parallel E2E test timeout, leading to random, hard-to-diagnose CI flakes.
+- **Solution**: Because `mockgcp` is a memory-backed mock that updates its storage layer instantly, there is no real-world latency or asynchronous processing to wait for. Always discard the returned operation (`_, err = client.Insert(...)`) and return immediately, completely bypassing `.Wait(ctx)` in all internal workflows.
+
 ---
 
 ## 6. Pre-Submit Checks
@@ -212,7 +216,20 @@ Before finishing the task or proposing a PR, the agent must run formatting, gene
        ```bash
        WRITE_GOLDEN_OUTPUT=1 go test ./tests/apichecks/... -run TestCRDFieldPresenceInTestsForAlpha
        ```
-6. **Verify Acronym Casing Compliance**:
+   - If the golden output gets updated, make sure to stage and commit the changes in `tests/apichecks/testdata/exceptions/`.
+6. **Run CI/CD Group Presubmit Tests Locally (CRITICAL for New Fixtures)**:
+   - **Merge Upstream Master First**: If your PR introduces a new E2E test fixture (e.g. `pkg/test/resourcefixture/testdata/basic/compute/v1beta1/...`), you **must** merge `upstream/master` into your branch *before* running the local presubmit. This ensures your local workspace has the latest E2E test list files (e.g., `tests/e2e/testdata/fixtures-<service_name>-list.txt`) that are used by the CI.
+   - **Run the Presubmit**: Locate and run the presubmit script under `dev/ci/presubmits/tests-e2e-fixtures-<service_name>` matching the resource's service name (e.g., `dev/ci/presubmits/tests-e2e-fixtures-container`) to ensure everything reconciles cleanly before proposing a PR:
+     ```bash
+     dev/ci/presubmits/tests-e2e-fixtures-<service_name>
+     ```
+   - **Commit the Updated List Files**: If your E2E fixture is new, the local presubmit (via `paralleltestrunner`) will automatically discover it and add it to the corresponding list file (e.g., `fixtures-<service_name>-list.txt`), causing the script to fail locally with a `test list file ... was modified` error. This is expected! Stage and commit this updated list file before pushing:
+     ```bash
+     git add tests/e2e/testdata/fixtures-<service_name>-list.txt
+     git commit -m "tests: register new <testname> E2E fixture"
+     ```
+     *Failure to do this will cause the CI (which runs with strict unchanged-list checks) to fail on the merged PR branch.*
+7. **Verify Acronym Casing Compliance**:
    - KCC enforces strict naming rules for acronyms in field names (e.g. using `IP` instead of `Ip`, `VPC` instead of `Vpc`). If the generated fields use non-standard casing (e.g. they were generated directly from Terraform's snake_case schema which maps `allow_cross_org_vpcs` -> `allowCrossOrgVpcs`), the API checks test `TestCRDsAcronyms` will fail.
    - Run this test locally before submitting:
      ```bash
@@ -220,22 +237,16 @@ Before finishing the task or proposing a PR, the agent must run formatting, gene
      ```
    - If the test fails, you **MUST** add the reported non-standard casing exceptions in alphabetical order to the exceptions file:
      `tests/apichecks/testdata/exceptions/acronyms.txt`
-7. **Run CI/CD Group Presubmit Tests Locally**:
-   - Locate and run the presubmit script under `dev/ci/presubmits/tests-e2e-fixtures-<service_name>` matching the resource's service name (e.g., `dev/ci/presubmits/tests-e2e-fixtures-container`) to ensure everything reconciles cleanly:
-     ```bash
-     dev/ci/presubmits/tests-e2e-fixtures-<service_name>
-     ```
 8. **Commit All Updated Artifacts and Generated Changes**:
    - Verify if any generated files (such as `mapper.generated.go`, GitHub Actions YAMLs, CRDs, Go clients, or exceptions) are modified using `git status` or `git diff`. Stage and commit them:
      ```bash
      git add -A
      git commit -m "chore: ensure pristine generated state and formatting to pass CI/CD presubmits"
      ```
-8. **CI/CD & Golden File Traps (Gotchas)**:
+9. **CI/CD & Golden File Traps (Gotchas)**:
    - **Accidental Binary Profile Artifacts (`heap.prof`)**: When running recorder or memory profile footprint tests (e.g., `TestProfileRecorderFootprint`), binary profile outputs like `heap.prof` may be written to the test directory (`cmd/recorder/pprof/.../heap.prof`). Always ensure these binary files are deleted and never committed to git.
    - **Selective Presubmit Harness & `WRITE_GOLDEN_OUTPUT=1` Trap**: Running specialized presubmit subsets (e.g., `test-pause`) with `WRITE_GOLDEN_OUTPUT=1` can inadvertently delete golden files belonging to skipped phases (e.g., `_exported.yaml`). Ensure you only regenerate golden files using the appropriate comprehensive test scope, or inspect git diffs to revert unintended deletions.
    - **Accidental Staging of Unrelated Logs**: When E2E fixture tests run locally (via `hack/record-gcp`, `hack/compare-mock`, or direct `go test`), other fixtures in the same compute/service package may produce local differences in their `_http_old_controller.log` or `_http.diff` logs. **Never commit changes or `.diff` files for unrelated fixtures.** Inspect `git diff` before staging and revert them.
    - **Missing `_identities.yaml`**: Newly created E2E fixtures dynamically generate a `_identities.yaml` identity registry file when run. Ensure this file is staged and committed along with your E2E fixture, or the CI presubmits will fail.
-
 
 
