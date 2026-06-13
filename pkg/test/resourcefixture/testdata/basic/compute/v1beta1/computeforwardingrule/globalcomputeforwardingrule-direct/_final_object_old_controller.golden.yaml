@@ -16,6 +16,7 @@ metadata:
     label-one: value-one
   name: ${forwardingRuleID}
   namespace: ${uniqueId}
+  selfLink: /apis/compute.cnrm.cloud.google.com/v1beta1/namespaces/${uniqueId}/computeforwardingrules/${forwardingRuleID}
 spec:
   description: A global forwarding rule
   ipAddress:
@@ -27,7 +28,7 @@ spec:
   portRange: "80"
   target:
     targetHTTPProxyRef:
-      name: computetargethttpproxy-2-${uniqueId}
+      name: ${targetHttpProxyID}
 status:
   conditions:
   - lastTransitionTime: "1970-01-01T00:00:00Z"

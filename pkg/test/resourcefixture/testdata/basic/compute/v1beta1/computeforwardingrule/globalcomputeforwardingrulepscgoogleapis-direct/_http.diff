@@ -1,0 +1,172 @@
+63a64,234
+> 404 Not Found
+> Content-Type: application/json; charset=UTF-8
+> Server: ESF
+> Vary: Origin
+> Vary: X-Origin
+> Vary: Referer
+> X-Content-Type-Options: nosniff
+> X-Frame-Options: SAMEORIGIN
+> X-Xss-Protection: 0
+> 
+> {
+>   "error": {
+>     "code": 404,
+>     "errors": [
+>       {
+>         "domain": "global",
+>         "message": "The resource 'projects/${projectId}/global/addresses/${addressID}' was not found",
+>         "reason": "notFound"
+>       }
+>     ],
+>     "message": "The resource 'projects/${projectId}/global/addresses/${addressID}' was not found"
+>   }
+> }
+> 
+> ---
+> 
+> POST https://compute.googleapis.com/compute/v1/projects/${projectId}/global/addresses?alt=json
+> Content-Type: application/json
+> 
+> {
+>   "address": "8.8.8.8",
+>   "addressType": "INTERNAL",
+>   "labels": {
+>     "cnrm-test": "true",
+>     "managed-by-cnrm": "true"
+>   },
+>   "name": "${addressID}",
+>   "network": "projects/${projectId}/global/networks/${addressID}",
+>   "purpose": "PRIVATE_SERVICE_CONNECT"
+> }
+> 
+> 200 OK
+> Content-Type: application/json; charset=UTF-8
+> Server: ESF
+> Vary: Origin
+> Vary: X-Origin
+> Vary: Referer
+> X-Content-Type-Options: nosniff
+> X-Frame-Options: SAMEORIGIN
+> X-Xss-Protection: 0
+> 
+> {
+>   "id": "000000000000000000000",
+>   "insertTime": "2024-04-01T12:34:56.123456Z",
+>   "kind": "compute#operation",
+>   "name": "${operationID}",
+>   "operationType": "insert",
+>   "progress": 0,
+>   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/operations/${operationID}",
+>   "startTime": "2024-04-01T12:34:56.123456Z",
+>   "status": "RUNNING",
+>   "targetId": "${addressID}",
+>   "targetLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}",
+>   "user": "user@example.com"
+> }
+> 
+> ---
+> 
+> GET https://compute.googleapis.com/compute/v1/projects/${projectId}/global/operations/${operationID}?alt=json&prettyPrint=false
+> 
+> 200 OK
+> Content-Type: application/json; charset=UTF-8
+> Server: ESF
+> Vary: Origin
+> Vary: X-Origin
+> Vary: Referer
+> X-Content-Type-Options: nosniff
+> X-Frame-Options: SAMEORIGIN
+> X-Xss-Protection: 0
+> 
+> {
+>   "endTime": "2024-04-01T12:34:56.123456Z",
+>   "id": "000000000000000000000",
+>   "insertTime": "2024-04-01T12:34:56.123456Z",
+>   "kind": "compute#operation",
+>   "name": "${operationID}",
+>   "operationType": "insert",
+>   "progress": 100,
+>   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/operations/${operationID}",
+>   "startTime": "2024-04-01T12:34:56.123456Z",
+>   "status": "DONE",
+>   "targetId": "${addressID}",
+>   "targetLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}",
+>   "user": "user@example.com"
+> }
+> 
+> ---
+> 
+> GET https://compute.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}?alt=json
+> Content-Type: application/json
+> 
+> 200 OK
+> Content-Type: application/json; charset=UTF-8
+> Server: ESF
+> Vary: Origin
+> Vary: X-Origin
+> Vary: Referer
+> X-Content-Type-Options: nosniff
+> X-Frame-Options: SAMEORIGIN
+> X-Xss-Protection: 0
+> 
+> {
+>   "address": "8.8.8.8",
+>   "addressType": "INTERNAL",
+>   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
+>   "description": "",
+>   "id": "000000000000000000000",
+>   "kind": "compute#address",
+>   "labelFingerprint": "abcdef0123A=",
+>   "name": "${addressID}",
+>   "network": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/networks/${addressID}",
+>   "networkTier": "PREMIUM",
+>   "purpose": "PRIVATE_SERVICE_CONNECT",
+>   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}",
+>   "status": "RESERVED"
+> }
+> 
+> ---
+> 
+> POST https://compute.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}/setLabels?alt=json
+> Content-Type: application/json
+> 
+> {
+>   "labelFingerprint": "abcdef0123A=",
+>   "labels": {
+>     "cnrm-test": "true",
+>     "managed-by-cnrm": "true"
+>   }
+> }
+> 
+> 200 OK
+> Content-Type: application/json; charset=UTF-8
+> Server: ESF
+> Vary: Origin
+> Vary: X-Origin
+> Vary: Referer
+> X-Content-Type-Options: nosniff
+> X-Frame-Options: SAMEORIGIN
+> X-Xss-Protection: 0
+> 
+> {
+>   "endTime": "2024-04-01T12:34:56.123456Z",
+>   "id": "000000000000000000000",
+>   "insertTime": "2024-04-01T12:34:56.123456Z",
+>   "kind": "compute#operation",
+>   "name": "${operationID}",
+>   "operationType": "setLabels",
+>   "progress": 100,
+>   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/operations/${operationID}",
+>   "startTime": "2024-04-01T12:34:56.123456Z",
+>   "status": "DONE",
+>   "targetId": "${addressID}",
+>   "targetLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}",
+>   "user": "user@example.com"
+> }
+> 
+> ---
+> 
+> GET https://compute.googleapis.com/compute/v1/projects/${projectId}/global/addresses/${addressID}?alt=json
+> Content-Type: application/json
+> 

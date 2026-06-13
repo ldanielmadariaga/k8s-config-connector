@@ -115,6 +115,10 @@ X-Xss-Protection: 0
   "kind": "compute#network",
   "name": "${networkID}",
   "networkFirewallPolicyEnforcementOrder": "AFTER_CLASSIC_FIREWALL",
+  "routingConfig": {
+    "bgpBestPathSelectionMode": "LEGACY",
+    "routingMode": "REGIONAL"
+  },
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/networks/${networkID}",
   "selfLinkWithId": "https://www.googleapis.com/compute/v1/projects/${projectId}/global/networks/${networkID}"
 }
@@ -236,7 +240,9 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
+  "allowSubnetCidrRoutesOverlap": false,
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
+  "enableFlowLogs": false,
   "fingerprint": "abcdef0123A=",
   "gatewayAddress": "10.0.0.1",
   "id": "000000000000000000000",
@@ -252,8 +258,7 @@ X-Xss-Protection: 0
   "purpose": "PRIVATE",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}",
-  "stackType": "IPV4_ONLY",
-  "state": "READY"
+  "stackType": "IPV4_ONLY"
 }
 
 ---
@@ -381,7 +386,6 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "affinityCookieTtlSec": 0,
   "connectionDraining": {
     "drainingTimeoutSec": 0
   },
@@ -391,12 +395,13 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL",
   "name": "${backendServiceID}",
+  "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "sessionAffinity": "NONE",
@@ -531,7 +536,6 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "affinityCookieTtlSec": 0,
   "connectionDraining": {
     "drainingTimeoutSec": 0
   },
@@ -541,12 +545,13 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL",
   "name": "${backendServiceID}",
+  "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "sessionAffinity": "NONE",
@@ -690,6 +695,7 @@ X-Xss-Protection: 0
   "IPProtocol": "TCP",
   "allPorts": true,
   "allowGlobalAccess": true,
+  "attachedExtensions": [],
   "backendService": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
@@ -772,6 +778,7 @@ X-Xss-Protection: 0
   "IPProtocol": "TCP",
   "allPorts": true,
   "allowGlobalAccess": true,
+  "attachedExtensions": [],
   "backendService": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
@@ -925,6 +932,7 @@ X-Xss-Protection: 0
   "IPAddress": "8.8.8.8",
   "IPProtocol": "TCP",
   "allPorts": true,
+  "attachedExtensions": [],
   "backendService": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
@@ -1030,7 +1038,6 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "affinityCookieTtlSec": 0,
   "connectionDraining": {
     "drainingTimeoutSec": 0
   },
@@ -1040,12 +1047,13 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL",
   "name": "${backendServiceID}",
+  "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "sessionAffinity": "NONE",
@@ -1133,7 +1141,6 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
-  "affinityCookieTtlSec": 0,
   "connectionDraining": {
     "drainingTimeoutSec": 0
   },
@@ -1143,12 +1150,13 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL",
   "name": "${backendServiceID}",
+  "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
   "sessionAffinity": "NONE",

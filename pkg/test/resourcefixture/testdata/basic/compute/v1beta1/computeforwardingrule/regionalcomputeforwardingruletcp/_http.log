@@ -241,7 +241,9 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
+  "allowSubnetCidrRoutesOverlap": false,
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
+  "enableFlowLogs": false,
   "fingerprint": "abcdef0123A=",
   "gatewayAddress": "10.0.0.1",
   "id": "000000000000000000000",
@@ -257,8 +259,7 @@ X-Xss-Protection: 0
   "purpose": "PRIVATE",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}",
-  "stackType": "IPV4_ONLY",
-  "state": "READY"
+  "stackType": "IPV4_ONLY"
 }
 
 ---
@@ -378,6 +379,7 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
+  "allowSubnetCidrRoutesOverlap": false,
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "fingerprint": "abcdef0123A=",
   "gatewayAddress": "10.0.0.1",
@@ -391,9 +393,7 @@ X-Xss-Protection: 0
   "purpose": "REGIONAL_MANAGED_PROXY",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "role": "ACTIVE",
-  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}",
-  "stackType": "IPV4_ONLY",
-  "state": "READY"
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}"
 }
 
 ---
@@ -528,12 +528,14 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL_MANAGED",
   "name": "${backendServiceID}",
+  "port": 80,
+  "portName": "http",
   "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
@@ -922,6 +924,7 @@ X-Xss-Protection: 0
 {
   "IPAddress": "8.8.8.8",
   "IPProtocol": "TCP",
+  "attachedExtensions": [],
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
   "fingerprint": "abcdef0123A=",
@@ -999,6 +1002,7 @@ X-Xss-Protection: 0
 {
   "IPAddress": "8.8.8.8",
   "IPProtocol": "TCP",
+  "attachedExtensions": [],
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
   "fingerprint": "abcdef0123A=",
@@ -1148,6 +1152,7 @@ X-Xss-Protection: 0
 {
   "IPAddress": "8.8.8.8",
   "IPProtocol": "TCP",
+  "attachedExtensions": [],
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "description": "A regional forwarding rule",
   "fingerprint": "abcdef0123A=",
@@ -1440,12 +1445,14 @@ X-Xss-Protection: 0
   "iap": {
     "enabled": false,
     "oauth2ClientId": "",
-    "oauth2ClientSecret": ""
+    "oauth2ClientSecretSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "id": "000000000000000000000",
   "kind": "compute#backendService",
   "loadBalancingScheme": "INTERNAL_MANAGED",
   "name": "${backendServiceID}",
+  "port": 80,
+  "portName": "http",
   "protocol": "TCP",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/backendServices/${backendServiceID}",
@@ -1531,6 +1538,7 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
+  "allowSubnetCidrRoutesOverlap": false,
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
   "fingerprint": "abcdef0123A=",
   "gatewayAddress": "10.0.0.1",
@@ -1544,9 +1552,7 @@ X-Xss-Protection: 0
   "purpose": "REGIONAL_MANAGED_PROXY",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "role": "ACTIVE",
-  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}",
-  "stackType": "IPV4_ONLY",
-  "state": "READY"
+  "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}"
 }
 
 ---
@@ -1627,7 +1633,9 @@ X-Frame-Options: SAMEORIGIN
 X-Xss-Protection: 0
 
 {
+  "allowSubnetCidrRoutesOverlap": false,
   "creationTimestamp": "2024-04-01T12:34:56.123456Z",
+  "enableFlowLogs": false,
   "fingerprint": "abcdef0123A=",
   "gatewayAddress": "10.0.0.1",
   "id": "000000000000000000000",
@@ -1643,8 +1651,7 @@ X-Xss-Protection: 0
   "purpose": "PRIVATE",
   "region": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1",
   "selfLink": "https://www.googleapis.com/compute/v1/projects/${projectId}/regions/us-central1/subnetworks/${subnetworkID}",
-  "stackType": "IPV4_ONLY",
-  "state": "READY"
+  "stackType": "IPV4_ONLY"
 }
 
 ---

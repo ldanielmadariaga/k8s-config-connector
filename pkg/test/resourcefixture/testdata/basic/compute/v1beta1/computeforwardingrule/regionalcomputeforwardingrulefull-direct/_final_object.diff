@@ -1,0 +1,8 @@
+32c32
+<     name: customnetwork
+---
+>     name: ${networkID}
+36c36
+<     name: customsubnetwork
+---
+>     name: ${subnetworkID}
