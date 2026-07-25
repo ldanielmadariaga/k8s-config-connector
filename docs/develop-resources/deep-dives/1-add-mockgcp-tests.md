@@ -117,3 +117,16 @@ For Config Connector **Beta** resources, your MockGCP should meet the following 
 * CREATE method shall assign the “output-only” fields. [Example 1](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/5e08dbffb5fa3922dd43c451f35fdec45882205a/mockgcp/mockresourcemanager/tagkeys.go#L99C23-L99C37) [Example 2](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/611abaff651af81bed4517f62f915318f1b239bd/mockgcp/mocksql/sqlinstance.go#L68-L180)
 * UPDATE method shall be able to update all mutable fields and support field masks if the real server does. [Example](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/8a350a029803a322e2889fd693cabf9780828c47/mockgcp/mockcloudbuild/workerpool.go#L100)
 * Make sure the log gives a stable outcome. You can override the value in<code> normalize.go </code>[example](https://github.com/GoogleCloudPlatform/k8s-config-connector/blob/ba513862c2fb6ec3e54a05f6483c76b0337d6cbd/tests/e2e/normalize.go#L100)
+
+## Troubleshooting & Local Environment Setup
+
+### Gcloud Authentication on gLinux Workstations
+
+By default, local test execution scripts (such as `hack/record-gcp` or the git `pre-push` hook validation scripts) will use your workstation's host system `/usr/bin/gcloud` (enabled by defaulting `USE_SYSTEM_GCLOUD=1` outside CI). This allows the toolchain to inherit your active enterprise authentication context, including corporate Certificate Authorities and the Enterprise Certificate Proxy (ECP).
+
+* **In GitHub Actions (CI)**: The workflow automatically switches to `USE_SYSTEM_GCLOUD=0` to download and isolate a fresh, version-controlled standalone bundle of the Cloud SDK.
+* **Overriding System Gcloud**: If you explicitly want to test with a clean, standalone, download-managed bundle on your local machine, you can run your validation tasks with the flag set to `0`:
+  ```bash
+  USE_SYSTEM_GCLOUD=0 ./dev/tasks/validate-and-push --validate-only
+  ```
+
