@@ -163,17 +163,21 @@ func TestSmoketest(t *testing.T) {
 		revertManifests(filepath.Join(root, "config/installbundle/components"))
 	})
 
-	t.Logf("Building images with tag %q", imageTag)
-	buildCmd := exec.CommandContext(ctx, filepath.Join(root, "dev/tasks/build-images"))
-	buildCmd.Dir = root
-	buildCmd.Env = append(os.Environ(),
-		"IMAGE_TAG="+imageTag,
-		"IMAGE_PREFIX="+imagePrefix,
-	)
-	buildCmd.Stdout = os.Stdout
-	buildCmd.Stderr = os.Stderr
-	if err := buildCmd.Run(); err != nil {
-		t.Fatalf("failed to build images: %v", err)
+	if os.Getenv("SKIP_BUILD_IMAGES") == "1" {
+		t.Logf("SKIP_BUILD_IMAGES=1 set; skipping dev/tasks/build-images execution")
+	} else {
+		t.Logf("Building images with tag %q", imageTag)
+		buildCmd := exec.CommandContext(ctx, filepath.Join(root, "dev/tasks/build-images"))
+		buildCmd.Dir = root
+		buildCmd.Env = append(os.Environ(),
+			"IMAGE_TAG="+imageTag,
+			"IMAGE_PREFIX="+imagePrefix,
+		)
+		buildCmd.Stdout = os.Stdout
+		buildCmd.Stderr = os.Stderr
+		if err := buildCmd.Run(); err != nil {
+			t.Fatalf("failed to build images: %v", err)
+		}
 	}
 
 	t.Logf("Loading images into kind")
