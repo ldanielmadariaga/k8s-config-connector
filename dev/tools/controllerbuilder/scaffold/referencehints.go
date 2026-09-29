@@ -62,8 +62,8 @@ func walkSpecFields(msg protoreflect.MessageDescriptor, prefix string, opts code
 			continue
 		}
 		// Skip the fields PrepopulateSpec drops, or a hint names a path the CRD
-		// does not have. This applies to identity fields, and to server-set
-		// fields when --place-server-set-fields is enabled. PrepopulateSpec only
+		// does not have. This applies to identity fields, and to the fields
+		// IsServerSetField places in ObservedState. PrepopulateSpec only
 		// drops them from the resource's top-level message, so they are only
 		// checked at the top.
 		if top && identityFields[string(field.Name())] {

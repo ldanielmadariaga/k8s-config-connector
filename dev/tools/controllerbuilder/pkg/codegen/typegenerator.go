@@ -115,8 +115,12 @@ type WriteOptions struct {
 	Siblings map[string]string
 	// PlaceServerSetFields puts a small allowlist of server-computed fields in
 	// ObservedState when no field of the message carries field_behavior. See
-	// IsServerSetField for the allowlist and the guard.
+	// ServerSetPlacement for the allowlist and the guard.
 	PlaceServerSetFields bool
+	// PlaceOutputOnlyFromComments puts a field in ObservedState when its proto
+	// comment says it is output only and the field carries no field_behavior.
+	// See ServerSetPlacement.
+	PlaceOutputOnlyFromComments bool
 }
 
 func NewTypeGenerator(goPackage string, outputBaseDir string, api *protoapi.Proto) *TypeGenerator {
@@ -249,7 +253,8 @@ func (g *TypeGenerator) visitMessage(message protoreflect.MessageDescriptor) err
 // isServerSet applies IsServerSetField only to fields of the resource's
 // top-level message. It returns false for fields of nested messages, which
 // identifyOutputs also visits, because a nested field named "id" or "kind" is
-// often set by the user.
+// often set by the user. The comment rule has the same scope, so both rules
+// move only fields the scaffolded Spec would otherwise hold.
 func (g *TypeGenerator) isServerSet(field protoreflect.FieldDescriptor, msg protoreflect.MessageDescriptor) bool {
 	if string(msg.FullName()) != g.rootMessageFQN {
 		return false
@@ -643,31 +648,33 @@ func WriteObservedStateMessage(out io.Writer, msgDetails *OutputMessageDetails, 
 	fmt.Fprintf(out, "\n")
 	fmt.Fprintf(out, "// %s=%s\n", KCCProtoMessageAnnotationObservedState, msg.FullName())
 	fmt.Fprintf(out, "type %s struct {\n", goType)
-	// Clear PlaceServerSetFields to keep placement notes out of the nested
+	// Clear both placement flags to keep placement notes out of the nested
 	// structs in types.generated.go; only the resource's own ObservedState,
 	// which the scaffolder writes, carries one. Every other flag carries over,
 	// or a nested observed field is named and typed differently from the same
 	// proto field in the spec struct beside it.
 	nestedOpts := opts
 	nestedOpts.PlaceServerSetFields = false
+	nestedOpts.PlaceOutputOnlyFromComments = false
 	WriteObservedStateFields(out, msgDetails, observedStateMessages, nil, nestedOpts)
 	fmt.Fprintf(out, "}\n")
 }
 
 // placementNote returns a +kcc:guess marker for a field that IsServerSetField
-// moves to ObservedState because of its name. It returns "" for any other
-// field.
+// moves to ObservedState, naming the rule that moved it. It returns "" for any
+// other field.
 //
 // The marker is written into the generated Go type as well as the judgement
-// queue. The allowlist will be wrong for some fields, and the person who finds
+// queue. Either rule will be wrong for some fields, and the person who finds
 // one is usually reading the Go type, not the queue.
 func placementNote(field protoreflect.FieldDescriptor, msg protoreflect.MessageDescriptor, opts WriteOptions) string {
-	if !IsServerSetField(field, msg, opts) {
+	placed := ServerSetPlacement(field, msg, opts)
+	if placed == "" {
 		return ""
 	}
 	// controller-gen drops +kcc: markers from the CRD description, so the
 	// guess shows up in the Go type but not in kubectl explain.
-	return "+kcc:guess=placement reason=no-field-behavior-on-message"
+	return "+kcc:guess=placement reason=" + string(placed)
 }
 
 func GoTypeForField(field protoreflect.FieldDescriptor, isTransitiveOutput bool, opts WriteOptions) (string, error) {
@@ -1103,25 +1110,69 @@ var serverSetFieldNames = map[string]bool{
 	"etag":              true,
 }
 
+// PlacementReason names the rule that placed a field in ObservedState. The
+// +kcc:guess=placement marker carries it as its reason.
+type PlacementReason string
+
+const (
+	// PlacedByComment is the output-only comment rule.
+	PlacedByComment PlacementReason = "output-only-in-comment"
+	// PlacedByName is the server-set name rule.
+	PlacedByName PlacementReason = "no-field-behavior-on-message"
+)
+
 // IsServerSetField reports whether a field represents server-generated state
-// (such as creationTimestamp, selfLink, or uid) that belongs in ObservedState
-// when the parent message lacks google.api.field_behavior annotations entirely.
+// that belongs in ObservedState, although the proto does not mark it
+// OUTPUT_ONLY. ServerSetPlacement says which rule matched.
 func IsServerSetField(field protoreflect.FieldDescriptor, msg protoreflect.MessageDescriptor, opts WriteOptions) bool {
-	if !opts.PlaceServerSetFields || msg == nil {
-		return false
+	return ServerSetPlacement(field, msg, opts) != ""
+}
+
+// ServerSetPlacement returns the rule that places a field in ObservedState, or
+// "" if no rule does. Each rule has its own flag:
+//
+//	PlacedByComment  PlaceOutputOnlyFromComments. The field's comment opens
+//	                 with "Output only." or "[Output Only]", and the field
+//	                 carries no field_behavior.
+//	PlacedByName     PlaceServerSetFields. The field's name is in
+//	                 serverSetFieldNames, such as creationTimestamp, selfLink
+//	                 or uid, and no field of the message carries
+//	                 field_behavior.
+//
+// The name rule needs the whole message unannotated, because a name is weak
+// evidence. The comment rule does not. The comment is the proto's own
+// statement, so the rule also catches a field that a partly annotated message
+// forgot to annotate. When both rules match, the comment wins for the same
+// reason.
+//
+// Neither rule applies to "name". identityFields in the scaffold package
+// handles it.
+func ServerSetPlacement(field protoreflect.FieldDescriptor, msg protoreflect.MessageDescriptor, opts WriteOptions) PlacementReason {
+	if msg == nil || field.Name() == "name" {
+		return ""
 	}
-	if hasAnyFieldBehavior(msg) {
-		return false
+	if opts.PlaceOutputOnlyFromComments && !hasFieldBehavior(field) {
+		if _, ok := OutputOnlyComment(field); ok {
+			return PlacedByComment
+		}
 	}
-	return serverSetFieldNames[GetJSONForKRM(field, opts)]
+	if opts.PlaceServerSetFields && !hasAnyFieldBehavior(msg) && serverSetFieldNames[GetJSONForKRM(field, opts)] {
+		return PlacedByName
+	}
+	return ""
+}
+
+// hasFieldBehavior reports whether a field carries a google.api.field_behavior
+// annotation.
+func hasFieldBehavior(field protoreflect.FieldDescriptor) bool {
+	return len(proto.GetExtension(field.Options(), annotations.E_FieldBehavior).([]annotations.FieldBehavior)) > 0
 }
 
 // hasAnyFieldBehavior reports whether any field of msg carries a
 // google.api.field_behavior annotation.
 func hasAnyFieldBehavior(msg protoreflect.MessageDescriptor) bool {
 	for i := 0; i < msg.Fields().Len(); i++ {
-		d := msg.Fields().Get(i).Options()
-		if len(proto.GetExtension(d, annotations.E_FieldBehavior).([]annotations.FieldBehavior)) > 0 {
+		if hasFieldBehavior(msg.Fields().Get(i)) {
 			return true
 		}
 	}

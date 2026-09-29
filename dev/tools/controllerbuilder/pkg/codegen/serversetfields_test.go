@@ -24,6 +24,7 @@ import (
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/descriptorpb"
+	"k8s.io/apimachinery/pkg/util/sets"
 )
 
 // serverSetTestFile builds two messages:
@@ -194,5 +195,157 @@ func TestWriteFieldWritesNoteOnce(t *testing.T) {
 				t.Errorf("WriteField() wrote %q %d times, want once:\n%s", tc.marker, got, buf.String())
 			}
 		})
+	}
+}
+
+// TestServerSetPlacement covers both rules, which one wins when both match,
+// and the fields neither rule moves.
+func TestServerSetPlacement(t *testing.T) {
+	// Arrange: Network carries no field_behavior anywhere, like compute's
+	// protos. Pipeline annotates some fields and not others.
+	network := commentedMessage(t, "Network",
+		commentedField{name: "creation_timestamp", comment: "[Output Only] Creation timestamp in RFC3339 text format."},
+		commentedField{name: "self_link", comment: "Server-defined URL for the resource."},
+		commentedField{name: "firewall_policy", comment: "[Output Only] URL of the firewall policy the network is associated with."},
+		commentedField{name: "name", comment: "[Output Only] Name of the resource."},
+		commentedField{name: "description", comment: "An optional description of this resource."},
+	)
+	pipeline := commentedMessage(t, "Pipeline",
+		commentedField{name: "display_name", comment: "Required. Display name.", behaviors: []annotations.FieldBehavior{annotations.FieldBehavior_REQUIRED}},
+		commentedField{name: "etag", comment: "Output only. This checksum is computed by the server."},
+		commentedField{name: "create_time", comment: "Output only. The creation time.", behaviors: []annotations.FieldBehavior{annotations.FieldBehavior_OUTPUT_ONLY}},
+		commentedField{name: "state", comment: "Output only. The state of the pipeline.", behaviors: []annotations.FieldBehavior{annotations.FieldBehavior_OPTIONAL}},
+	)
+	byComment := WriteOptions{PlaceOutputOnlyFromComments: true}
+	byName := WriteOptions{PlaceServerSetFields: true}
+	both := WriteOptions{PlaceOutputOnlyFromComments: true, PlaceServerSetFields: true}
+
+	tests := []struct {
+		name  string
+		msg   protoreflect.MessageDescriptor
+		field string
+		opts  WriteOptions
+		want  PlacementReason
+	}{
+		{"comment rule", network, "firewall_policy", byComment, PlacedByComment},
+		{"comment rule ignores the name", network, "self_link", byComment, ""},
+		{"name rule", network, "self_link", byName, PlacedByName},
+		{"name rule ignores the comment", network, "firewall_policy", byName, ""},
+		{"both match, the comment wins", network, "creation_timestamp", both, PlacedByComment},
+		{"name is left to the identity policy", network, "name", both, ""},
+		{"no signal", network, "description", both, ""},
+
+		// One annotation on the message turns the name rule off. The comment
+		// rule still applies to a field that carries none itself.
+		{"partly annotated message, comment rule", pipeline, "etag", both, PlacedByComment},
+		{"partly annotated message, name rule", pipeline, "etag", byName, ""},
+		{"a field marked OUTPUT_ONLY is already an output", pipeline, "create_time", both, ""},
+		{"a field's own annotation outranks its comment", pipeline, "state", both, ""},
+
+		{"off by default", network, "creation_timestamp", WriteOptions{}, ""},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name+"/"+tc.field, func(t *testing.T) {
+			// Arrange
+			f := tc.msg.Fields().ByName(protoreflect.Name(tc.field))
+			if f == nil {
+				t.Fatalf("no field %q on %s", tc.field, tc.msg.Name())
+			}
+
+			// Act
+			got := ServerSetPlacement(f, tc.msg, tc.opts)
+
+			// Assert
+			if got != tc.want {
+				t.Errorf("ServerSetPlacement(%s.%s) = %q, want %q", tc.msg.Name(), tc.field, got, tc.want)
+			}
+			if IsServerSetField(f, tc.msg, tc.opts) != (tc.want != "") {
+				t.Errorf("IsServerSetField(%s.%s) disagrees with ServerSetPlacement", tc.msg.Name(), tc.field)
+			}
+		})
+	}
+}
+
+// TestCommentRuleOnlyAppliesToTheRootMessage pins the comment rule to the
+// same scope as the name rule. A nested message can be shared by several
+// resources in the package, so a move there would reach all of them.
+func TestCommentRuleOnlyAppliesToTheRootMessage(t *testing.T) {
+	// Arrange
+	network := commentedMessage(t, "Network",
+		commentedField{name: "firewall_policy", comment: "[Output Only] URL of the firewall policy."})
+	field := network.Fields().ByName("firewall_policy")
+	opts := WriteOptions{PlaceOutputOnlyFromComments: true}
+	visiting := &TypeGenerator{writeOptions: opts, rootMessageFQN: string(network.FullName())}
+	elsewhere := &TypeGenerator{writeOptions: opts, rootMessageFQN: "google.cloud.test.v1.Other"}
+
+	// Act
+	atRoot := visiting.isServerSet(field, network)
+	away := elsewhere.isServerSet(field, network)
+
+	// Assert
+	if !atRoot {
+		t.Error("firewallPolicy on the visited message is not placed, want placed")
+	}
+	if away {
+		t.Error("firewallPolicy below the visited message is placed, want not placed")
+	}
+}
+
+// TestPlacementNoteNamesTheRule checks that the marker says which rule moved
+// the field, so a reader of the Go type knows what to check.
+func TestPlacementNoteNamesTheRule(t *testing.T) {
+	// Arrange
+	network := commentedMessage(t, "Network",
+		commentedField{name: "firewall_policy", comment: "[Output Only] URL of the firewall policy."},
+		commentedField{name: "self_link", comment: "Server-defined URL for the resource."},
+		commentedField{name: "description", comment: "An optional description of this resource."},
+	)
+	both := WriteOptions{PlaceOutputOnlyFromComments: true, PlaceServerSetFields: true}
+
+	for _, tc := range []struct {
+		field string
+		want  string
+	}{
+		{"firewall_policy", "+kcc:guess=placement reason=output-only-in-comment"},
+		{"self_link", "+kcc:guess=placement reason=no-field-behavior-on-message"},
+		{"description", ""},
+	} {
+		t.Run(tc.field, func(t *testing.T) {
+			// Act
+			got := placementNote(network.Fields().ByName(protoreflect.Name(tc.field)), network, both)
+
+			// Assert
+			if got != tc.want {
+				t.Errorf("placementNote(%s) = %q, want %q", tc.field, got, tc.want)
+			}
+		})
+	}
+}
+
+// TestWriteObservedStateMessageLeavesOutPlacementNotes covers the nested
+// ObservedState structs in types.generated.go. Only the resource's own
+// ObservedState, which the scaffolder writes, carries a placement note.
+func TestWriteObservedStateMessageLeavesOutPlacementNotes(t *testing.T) {
+	// Arrange
+	network := commentedMessage(t, "Network",
+		commentedField{name: "firewall_policy", comment: "[Output Only] URL of the firewall policy."},
+		commentedField{name: "self_link", comment: "Server-defined URL for the resource."},
+	)
+	details := &OutputMessageDetails{
+		Message:      network,
+		OutputFields: []protoreflect.FieldDescriptor{network.Fields().Get(0), network.Fields().Get(1)},
+	}
+	both := WriteOptions{PlaceOutputOnlyFromComments: true, PlaceServerSetFields: true}
+
+	// Act
+	var buf bytes.Buffer
+	WriteObservedStateMessage(&buf, details, sets.NewString(), both)
+
+	// Assert
+	if strings.Contains(buf.String(), "+kcc:guess=placement") {
+		t.Errorf("nested ObservedState carries a placement note:\n%s", buf.String())
+	}
+	if !strings.Contains(buf.String(), `json:"firewallPolicy,`) {
+		t.Errorf("nested ObservedState is missing firewallPolicy:\n%s", buf.String())
 	}
 }

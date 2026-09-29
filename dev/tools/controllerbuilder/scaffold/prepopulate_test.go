@@ -15,7 +15,6 @@
 package scaffold
 
 import (
-	"fmt"
 	"go/parser"
 	"go/token"
 	"strings"
@@ -349,131 +348,100 @@ func TestPrepopulateObservedStateQueuesDerivedMessageMaps(t *testing.T) {
 	}
 }
 
-func TestDetectOutputOnlyInComments(t *testing.T) {
-	// Arrange
-	msg := commentedMessage(t,
-		"Output only. Set by the server.",                   // field_0, the long-standing spelling
-		"[Output Only] IP address on the Google side.",      // field_1, how Compute writes it
-		"The display name of the widget.",                   // field_2, no signal
-		"Set by the user. Output only in some other sense.", // field_3, marker not at the front
-	)
-	want := []string{".spec.field0", ".spec.field1"}
-
-	// Act
-	got := DetectOutputOnlyInComments(msg, codegen.WriteOptions{})
-
-	// Assert
-	var paths []string
-	for _, c := range got {
-		paths = append(paths, c.FieldPath)
-	}
-	if len(paths) != len(want) {
-		t.Fatalf("got %v, want %v", paths, want)
-	}
-	for i := range want {
-		if paths[i] != want[i] {
-			t.Errorf("got %v, want %v", paths, want)
-		}
-	}
-}
-
-// Compute writes both "[Output Only]" and "[Output only]", so the prefixes
-// match in any case. A comment where the words run on into a condition does not
-// match, because the field is only output some of the time.
-func TestDetectOutputOnlyIgnoresCase(t *testing.T) {
-	// Arrange
-	msg := commentedMessage(t,
-		"[Output only] Number of network endpoints in the group.",                       // field_0, compute's other spelling
-		"Output Only. The overall outcome of the test.",                                 // field_1, devtools.testing
-		"[Output only for type PARTNER. Input only for PARTNER_PROVIDER.] Pairing key.", // field_2, compute, conditional
-		"Output only for the create operation. Required for update.",                    // field_3, spanner-style, conditional
-	)
-	want := []string{".spec.field0", ".spec.field1"}
-
-	// Act
-	got := DetectOutputOnlyInComments(msg, codegen.WriteOptions{})
-
-	// Assert
-	var paths []string
-	for _, c := range got {
-		paths = append(paths, c.FieldPath)
-	}
-	if strings.Join(paths, ",") != strings.Join(want, ",") {
-		t.Errorf("got %v, want %v", paths, want)
-	}
-}
-
-// A field the proto already annotates needs no prose detection. Reporting it
-// would queue a field the generator has already placed correctly.
-func TestDetectOutputOnlySkipsAnnotatedFields(t *testing.T) {
-	// Arrange
-	unannotated := commentedMessage(t, "[Output Only] Set by the server.")
-	annotated := testMessage(t)
-
-	// Act
-	fromUnannotated := DetectOutputOnlyInComments(unannotated, codegen.WriteOptions{})
-	fromAnnotated := DetectOutputOnlyInComments(annotated, codegen.WriteOptions{})
-
-	// Assert
-	if len(fromUnannotated) != 1 {
-		t.Errorf("unannotated field should be reported, got %d", len(fromUnannotated))
-	}
-	if len(fromAnnotated) != 0 {
-		t.Errorf("annotated fields should not be reported, got %v", fromAnnotated)
-	}
-}
-
-// With --place-server-set-fields, a field on the server-set allowlist is
-// already in ObservedState and has its own server-set-field-placed entry.
-// Reporting it here too would add an entry saying it was left in the Spec.
-func TestDetectOutputOnlySkipsServerSetFields(t *testing.T) {
+// TestPrepopulateSpecPlacesFieldsInObservedState covers both placement rules
+// from the Spec side. A placed field leaves the Spec and gets one queue entry
+// at its ObservedState path, and the entry's reason names the rule.
+func TestPrepopulateSpecPlacesFieldsInObservedState(t *testing.T) {
 	// Arrange: no field_behavior anywhere, like compute's Network.
-	msg := namedCommentedMessage(t, [][2]string{
-		{"creation_timestamp", "[Output Only] Creation timestamp in RFC3339 text format."},              // on the allowlist
-		{"firewall_policy", "[Output Only] URL of the firewall policy the network is associated with."}, // not on it
+	msg := commentedMessage(t, [][2]string{
+		{"creation_timestamp", "[Output Only] Creation timestamp in RFC3339 text format."},              // both rules
+		{"firewall_policy", "[Output Only] URL of the firewall policy the network is associated with."}, // comment rule
+		{"self_link", "Server-defined URL for the resource."},                                           // name rule
+		{"description", "An optional description of this resource."},                                    // neither
 	})
+	const byComment, byName = "output-only-in-comment-only", "server-set-field-placed"
 
 	tests := []struct {
-		name string
-		opts codegen.WriteOptions
-		want []string
+		name      string
+		opts      codegen.WriteOptions
+		wantSpec  []string
+		wantQueue []string
 	}{
-		{"server-set placement on", codegen.WriteOptions{PlaceServerSetFields: true}, []string{".spec.firewallPolicy"}},
-		{"server-set placement off", codegen.WriteOptions{}, []string{".spec.creationTimestamp", ".spec.firewallPolicy"}},
+		{
+			name:     "both rules",
+			opts:     codegen.WriteOptions{PlaceOutputOnlyFromComments: true, PlaceServerSetFields: true},
+			wantSpec: []string{"description"},
+			wantQueue: []string{
+				".status.observedState.creationTimestamp " + byComment,
+				".status.observedState.firewallPolicy " + byComment,
+				".status.observedState.selfLink " + byName,
+			},
+		},
+		{
+			name:     "comment rule only",
+			opts:     codegen.WriteOptions{PlaceOutputOnlyFromComments: true},
+			wantSpec: []string{"selfLink", "description"},
+			wantQueue: []string{
+				".status.observedState.creationTimestamp " + byComment,
+				".status.observedState.firewallPolicy " + byComment,
+			},
+		},
+		{
+			name:     "name rule only",
+			opts:     codegen.WriteOptions{PlaceServerSetFields: true},
+			wantSpec: []string{"firewallPolicy", "description"},
+			wantQueue: []string{
+				".status.observedState.creationTimestamp " + byName,
+				".status.observedState.selfLink " + byName,
+			},
+		},
+		{
+			name:     "neither",
+			wantSpec: []string{"creationTimestamp", "firewallPolicy", "selfLink", "description"},
+		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			// Act
-			got := DetectOutputOnlyInComments(msg, tc.opts)
+			got, err := PrepopulateSpec(msg, tc.opts)
 
 			// Assert
-			var paths []string
-			for _, c := range got {
-				paths = append(paths, c.FieldPath)
+			if err != nil {
+				t.Fatalf("unexpected error: %v", err)
 			}
-			if strings.Join(paths, ",") != strings.Join(tc.want, ",") {
-				t.Errorf("got %v, want %v", paths, tc.want)
+			var spec []string
+			for _, line := range strings.Split(got.SpecFields, "\n") {
+				if _, after, ok := strings.Cut(line, `json:"`); ok {
+					name, _, _ := strings.Cut(after, ",")
+					spec = append(spec, name)
+				}
+			}
+			if strings.Join(spec, ",") != strings.Join(tc.wantSpec, ",") {
+				t.Errorf("Spec fields = %v, want %v", spec, tc.wantSpec)
+			}
+			var queue []string
+			for _, j := range got.Judgement {
+				if j.Reason != byComment && j.Reason != byName {
+					continue
+				}
+				queue = append(queue, j.FieldPath+" "+j.Reason)
+				// The entry quotes the comment, so a reviewer can decide
+				// without opening the proto.
+				if j.Reason == byComment && !strings.Contains(j.Detail, "[Output Only]") {
+					t.Errorf("entry for %s does not quote the comment: %s", j.FieldPath, j.Detail)
+				}
+			}
+			if strings.Join(queue, ",") != strings.Join(tc.wantQueue, ",") {
+				t.Errorf("placement entries = %v, want %v", queue, tc.wantQueue)
 			}
 		})
 	}
 }
 
 // commentedMessage builds a message whose fields carry leading comments, which
-// is what DetectOutputOnlyInComments reads. The fields are named field_0,
-// field_1 and so on.
-func commentedMessage(t *testing.T, comments ...string) protoreflect.MessageDescriptor {
-	t.Helper()
-	var fields [][2]string
-	for i, c := range comments {
-		fields = append(fields, [2]string{fmt.Sprintf("field_%d", i), c})
-	}
-	return namedCommentedMessage(t, fields)
-}
-
-// namedCommentedMessage is commentedMessage for a test that needs real field
-// names. Each entry is {name, comment}. SourceCodeInfo paths are
-// [4=message_type, msgIndex, 2=field, fieldIndex].
-func namedCommentedMessage(t *testing.T, named [][2]string) protoreflect.MessageDescriptor {
+// is what the output-only comment rule reads. Each entry is {name, comment}.
+// SourceCodeInfo paths are [4=message_type, msgIndex, 2=field, fieldIndex].
+func commentedMessage(t *testing.T, named [][2]string) protoreflect.MessageDescriptor {
 	t.Helper()
 	var fields []*descriptorpb.FieldDescriptorProto
 	var locs []*descriptorpb.SourceCodeInfo_Location

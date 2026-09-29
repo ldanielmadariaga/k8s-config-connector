@@ -223,7 +223,7 @@ func TestValidateEmitReferenceHintsNeedsPrepopulateSpec(t *testing.T) {
 	}
 }
 
-// generate-types only checks output-only comments while prepopulating the
+// generate-types only moves output-only-commented fields out of a prepopulated
 // Spec, so --detect-output-only-in-comments on its own is rejected rather than
 // ignored.
 func TestValidateDetectOutputOnlyNeedsPrepopulateSpec(t *testing.T) {
