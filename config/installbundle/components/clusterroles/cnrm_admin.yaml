@@ -1640,6 +1640,18 @@ rules:
   - patch
   - delete
 - apiGroups:
+  - retail.cnrm.cloud.google.com
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
   - run.cnrm.cloud.google.com
   resources:
   - '*'
