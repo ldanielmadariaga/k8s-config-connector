@@ -1,0 +1,79 @@
+# Judgement queue for this service, written by controllerbuilder generate-types.
+#
+# Each entry is a call the generator could not make with confidence. Review it,
+# then set status: resolved and a resolution:
+#   accepted        the generated output is right as it is
+#   edited          you changed the type; the note says how
+#   deferred        right, but handled elsewhere; the note says where
+#   not-applicable  wrong for this resource; the note says why
+#
+# Do not delete entries. The file is also the record of what was decided, and
+# regenerating keeps the status of every entry it already has.
+#
+# While a possible-reference entry is open, TestMissingRefs does not fail on
+# that field. Once it is resolved, the field is checked like any other. A field
+# can have several of these entries, one per signal. Give them all the same
+# status, or tests/apichecks fails.
+#
+# Until a Kind's untriaged-bulk-generation entry is resolved, every run checks
+# the Kind again and adds new findings here. The Kind's <kind>_types.go is
+# never rewritten, so after a generator change a finding can name a field that
+# file does not have.
+
+entries:
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//workspaceevents.googleapis.com/subscriptions/{subscription}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    reason: root-not-in-name
+    detail: the name subscriptions/{subscription} has nothing above the resource, so no root reference was emitted; if the resource or its Create request takes a parent, as Folder, Project and TagKey do, model that parent as a reference
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/subscriptions: https://docs.cloud.google.com/workspace/events/reference/rest/v1/subscriptions, https://docs.cloud.google.com/workspace/events/docs/reference/rest/v1/subscriptions, https://docs.cloud.google.com/workspace/docs/reference/rest/v1/subscriptions'
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .spec.etag
+    reason: etag-in-spec
+    detail: etag was generated in the Spec because the proto does not mark it OUTPUT_ONLY; confirm whether it belongs in status.observedState
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .spec.notificationEndpoint.pubsubTopic
+    reason: possible-reference
+    detail: the proto marks this field as a reference to pubsub.googleapis.com/Topic (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .spec.notificationEndpoint.pubsubTopic
+    reason: possible-reference-by-description
+    detail: the description has the resource-name template "projects/{project}/topics/{topic}"
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .spec.payloadOptions.fieldMask
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FieldMask, which was generated as struct FieldMask; confirm KRM representation
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .spec.targetResource
+    reason: possible-reference
+    detail: the proto marks this field as a reference to * (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: WorkspaceeventsSubscription
+    group: workspaceevents.cnrm.cloud.google.com
+    field: .status.observedState.eventTypes
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.eventTypes. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.eventTypes if it is confirmed output only. Proto comment: Required. Immutable. Unordered list. Input for creating a subscription. Otherwise, output only. One or more types of events to receive about the target resource. Formatted according to the CloudEvents specification. The supported event types depend on the target resource of your subscription. For details, see [Supported Google Workspace events](https://developers.google.com/workspace/events/guides#supported-events). By default, you also receive events about the [lifecycle of your subscription](https://developers.google.com/workspace/events/guides/events-lifecycle). You don''t need to specify lifecycle events for this field. If you specify an event type that doesn''t exist for the target resource, the request returns an HTTP `400 Bad Request` status code.'
+    status: open

@@ -1,0 +1,1599 @@
+# Judgement queue for this service, written by controllerbuilder generate-types.
+#
+# Each entry is a call the generator could not make with confidence. Review it,
+# then set status: resolved and a resolution:
+#   accepted        the generated output is right as it is
+#   edited          you changed the type; the note says how
+#   deferred        right, but handled elsewhere; the note says where
+#   not-applicable  wrong for this resource; the note says why
+#
+# Do not delete entries. The file is also the record of what was decided, and
+# regenerating keeps the status of every entry it already has.
+#
+# While a possible-reference entry is open, TestMissingRefs does not fail on
+# that field. Once it is resolved, the field is checked like any other. A field
+# can have several of these entries, one per signal. Give them all the same
+# status, or tests/apichecks fails.
+#
+# Until a Kind's untriaged-bulk-generation entry is resolved, every run checks
+# the Kind again and adds new findings here. The Kind's <kind>_types.go is
+# never rewritten, so after a generator change a finding can name a field that
+# file does not have.
+
+entries:
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/liveStreamEventsByAssetKey/{asset_key}/adBreaks/{ad_break}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/liveStreamEventsByAssetKey/{asset_key}/adBreaks/{ad_break}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerAdBreakSpec
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerAdBreakIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: parent-ref-not-modelled
+    detail: the parent is networks/{network_code}/liveStreamEventsByAssetKey/{asset_key}, and no LiveStreamEventsByAssetKeyRef type exists to point at; add the parent resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.liveStreamEventsByAssetKey.adBreaks: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.liveStreamEventsByAssetKey.adBreaks'
+    status: open
+  - kind: AdmanagerAdBreak
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.adBreakID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/adRules/{ad_rule}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/adRules/{ad_rule}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerAdRuleSpec
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerAdRuleIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.adRules: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.adRules'
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AudienceSegment (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].cmsMetadataTargetings[].cmsMetadataValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CmsMetadataValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingKey, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingValue, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.excludedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.targetedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedPlacements
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Placement (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.excludedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.targetedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.excludedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.targetedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.excludedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.targetedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.excludedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.targetedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.excludedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.targetedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.excludedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.targetedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.excludedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.targetedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdRule
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: empty-observedstate
+    detail: nothing was generated into status.observedState; the proto probably marks no field OUTPUT_ONLY, so output fields landed in the Spec. Decide what belongs in status
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/adSpots/{ad_spot}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/adSpots/{ad_spot}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerAdSpotSpec
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerAdSpotIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerAdSpot
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.adSpots: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.adSpots'
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/adUnits/{ad_unit}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/adUnits/{ad_unit}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerAdUnitSpec
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.adUnits: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.adUnits'
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appliedLabelFrequencyCaps[].label
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Label (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appliedLabelFrequencyCaps[].label
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerLabel, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appliedLabels[].label
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Label (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appliedLabels[].label
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerLabel, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appliedTeams
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Team (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.externalSetTopBoxChannelID
+    reason: deprecated-field
+    detail: the proto marks this field deprecated, so new Kinds leave it out of the Spec. If this Spec still has it, remove it by hand; add it back only if users still need it
+    status: open
+  - kind: AdmanagerAdUnit
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.parentAdUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/applications/{application}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/applications/{application}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerApplicationSpec
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerApplicationIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.applications: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.applications'
+    status: open
+  - kind: AdmanagerApplication
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.appStoreID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/cdnConfigs/{cdn_config}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/cdnConfigs/{cdn_config}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerCdnConfigSpec
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerCdnConfigIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerCdnConfig
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.cdnConfigs: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.cdnConfigs'
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/contacts/{contact}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/contacts/{contact}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerContactSpec
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.contacts: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.contacts'
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.company
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Company (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerContact
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.company
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/creativeSets/{creative_set}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/creativeSets/{creative_set}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerCreativeSetSpec
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerCreativeSetIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.creativeSets: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.creativeSets'
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.companionCreatives
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Creative (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerCreativeSet
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.masterCreative
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Creative (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerCustomField
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerCustomField
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/customFields/{custom_field}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerCustomField
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/customFields/{custom_field}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerCustomFieldSpec
+    status: open
+  - kind: AdmanagerCustomField
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerCustomField
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.customFields: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.customFields'
+    status: open
+  - kind: AdmanagerCustomTargetingKey
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerCustomTargetingKey
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/customTargetingKeys/{custom_targeting_key}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerCustomTargetingKey
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/customTargetingKeys/{custom_targeting_key}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerCustomTargetingKeySpec
+    status: open
+  - kind: AdmanagerCustomTargetingKey
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerCustomTargetingKey
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.customTargetingKeys: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.customTargetingKeys'
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/customTargetingValues/{custom_targeting_value}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/customTargetingValues/{custom_targeting_value}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerCustomTargetingValueSpec
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.customTargetingValues: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.customTargetingValues'
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.customTargetingKey
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.customTargetingKey
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerCustomTargetingValue
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.customTargetingKey
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingKey, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/entitySignalsMappings/{entity_signals_mapping}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/entitySignalsMappings/{entity_signals_mapping}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerEntitySignalsMappingSpec
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerEntitySignalsMappingIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerEntitySignalsMapping
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.entitySignalsMappings: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.entitySignalsMappings'
+    status: open
+  - kind: AdmanagerLabel
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerLabel
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/labels/{label}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerLabel
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/labels/{label}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerLabelSpec
+    status: open
+  - kind: AdmanagerLabel
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerLabel
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.labels: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.labels'
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/liveStreams/{live_stream}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/liveStreams/{live_stream}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerLiveStreamSpec
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerLiveStreamIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.liveStreams: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.liveStreams'
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.adMediaDeliveryConfig
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CdnConfig (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.daiAuthenticationKeys
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DaiAuthenticationKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.daiEncodingProfiles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DaiEncodingProfile (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.segmentURLAuthenticationKeys
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DaiAuthenticationKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.slate
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Slate (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.slate
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerSlate, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerLiveStream
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.sourceContentConfigurations
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CdnConfig (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/placements/{placement}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/placements/{placement}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerPlacementSpec
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.placements: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.placements'
+    status: open
+  - kind: AdmanagerPlacement
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targetedAdUnits
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/privateAuctions/{private_auction}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/privateAuctions/{private_auction}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerPrivateAuctionSpec
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerPrivateAuctionIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.privateAuctions: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.privateAuctions'
+    status: open
+  - kind: AdmanagerPrivateAuction
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.sellerContactUsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/User (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/privateAuctionDeals/{private_auction_deal}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/privateAuctionDeals/{private_auction_deal}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerPrivateAuctionDealSpec
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerPrivateAuctionDealIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.privateAuctionDeals: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.privateAuctionDeals'
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AudienceSegment (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].cmsMetadataTargetings[].cmsMetadataValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CmsMetadataValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingKey, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingValue, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.excludedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.targetedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedPlacements
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Placement (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.excludedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.targetedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.excludedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.targetedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.excludedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.targetedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.excludedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.targetedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.excludedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.targetedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.excludedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.targetedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.excludedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.targetedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerPrivateAuctionDeal
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/reports/{report}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/reports/{report}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerReportSpec
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerReportIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerReport
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.reports: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.reports'
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/sites/{site}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/sites/{site}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerSiteSpec
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerSiteIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerSite
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.sites: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.sites'
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/slates/{slate}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/slates/{slate}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerSlateSpec
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerSlateIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerSlate
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.slates: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.slates'
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/targetingPresets/{targeting_preset}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/targetingPresets/{targeting_preset}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerTargetingPresetSpec
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated AdmanagerTargetingPresetIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.targetingPresets: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.targetingPresets'
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.excludedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContent
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Content (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.contentTargeting.targetedContentBundles
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/ContentBundle (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AudienceSegment (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].audienceSegmentTargetings[].audienceSegments
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].cmsMetadataTargetings[].cmsMetadataValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CmsMetadataValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingKey (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingKey
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingKey, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/CustomTargetingValue (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.customTargeting.customTargetingClauses[].customTargetingLiterals[].customTargetingValues
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerCustomTargetingValue, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.excludedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.geoTargeting.targetedGeos
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/GeoTarget (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.excludedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/AdUnit (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedAdUnits[].adUnit
+    reason: possible-reference-by-sibling
+    detail: the name matches AdmanagerAdUnit, a resource this service declares; confirm whether it should be a reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.inventoryTargeting.targetedPlacements
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Placement (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.excludedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.mobileApplicationTargeting.firstPartyTargeting.targetedApplications
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Application (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.excludedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.bandwidthTargeting.targetedBandwidthGroups
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BandwidthGroup (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.excludedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserLanguageTargeting.targetedBrowserLanguages
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/BrowserLanguage (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.excludedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.browserTargeting.targetedBrowsers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/Browser (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.excludedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCapabilityTargeting.targetedCapabilities
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCapability (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.excludedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceCategoryTargeting.targetedCategories
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceCategory (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.excludedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedDeviceManufacturers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/DeviceManufacturer (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDeviceSubmodels
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDeviceSubmodel (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.deviceManufacturerTargeting.targetedMobileDevices
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileDevice (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.excludedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.mobileCarrierTargeting.targetedMobileCarriers
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/MobileCarrier (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.excludedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystemVersions
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystemVersion (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTargetingPreset
+    group: admanager.cnrm.cloud.google.com
+    field: .spec.targeting.technologyTargeting.operatingSystemTargeting.targetedOperatingSystems
+    reason: possible-reference
+    detail: the proto marks this field as a reference to admanager.googleapis.com/OperatingSystem (google.api.resource_reference); confirm whether it should be a KCC reference
+    status: open
+  - kind: AdmanagerTeam
+    group: admanager.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: AdmanagerTeam
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//admanager.googleapis.com/networks/{network_code}/teams/{team}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: AdmanagerTeam
+    group: admanager.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "networks/{network_code}/teams/{team}" contains ancestor segment(s) networks/{network_code} with no matching reference or field on AdmanagerTeamSpec
+    status: open
+  - kind: AdmanagerTeam
+    group: admanager.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is networks/{network_code}, and no NetworkRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: AdmanagerTeam
+    group: admanager.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/networks.teams: https://docs.cloud.google.com/ad-manager/docs/reference/rest/v1/networks.teams'
+    status: open

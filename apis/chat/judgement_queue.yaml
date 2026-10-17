@@ -1,0 +1,293 @@
+# Judgement queue for this service, written by controllerbuilder generate-types.
+#
+# Each entry is a call the generator could not make with confidence. Review it,
+# then set status: resolved and a resolution:
+#   accepted        the generated output is right as it is
+#   edited          you changed the type; the note says how
+#   deferred        right, but handled elsewhere; the note says where
+#   not-applicable  wrong for this resource; the note says why
+#
+# Do not delete entries. The file is also the record of what was decided, and
+# regenerating keeps the status of every entry it already has.
+#
+# While a possible-reference entry is open, TestMissingRefs does not fail on
+# that field. Once it is resolved, the field is checked like any other. A field
+# can have several of these entries, one per signal. Give them all the same
+# status, or tests/apichecks fails.
+#
+# Until a Kind's untriaged-bulk-generation entry is resolved, every run checks
+# the Kind again and adds new findings here. The Kind's <kind>_types.go is
+# never rewritten, so after a generator change a finding can name a field that
+# file does not have.
+
+entries:
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//chat.googleapis.com/spaces/{space}/members/{member}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "spaces/{space}/members/{member}" contains ancestor segment(s) spaces/{space} with no matching reference or field on ChatMembershipSpec
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: identity-server-generated-id
+    detail: generated ChatMembershipIdentity implements identity.ServerGeneratedIdentity because the Create RPC has no *_id parameter; confirm whether the resource ID is truly server-generated or client-specified in .name
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is spaces/{space}, and no SpaceRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/spaces.members: https://docs.cloud.google.com/chat/api/reference/rest/v1/spaces.members, https://docs.cloud.google.com/workspace/chat/docs/reference/rest/v1/spaces.members, https://docs.cloud.google.com/chat/docs/reference/rest/v1/spaces.members'
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    field: .spec.member.domainID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    field: .status.observedState.createTime
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.createTime. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.createTime if it is confirmed output only. Proto comment: Optional. Immutable. The creation time of the membership, such as when a member joined or was invited to join a space. This field is output only, except when used to import historical memberships in import mode spaces.'
+    status: open
+  - kind: ChatMembership
+    group: chat.cnrm.cloud.google.com
+    field: .status.observedState.deleteTime
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.deleteTime. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.deleteTime if it is confirmed output only. Proto comment: Optional. Immutable. The deletion time of the membership, such as when a member left or was removed from a space. This field is output only, except when used to import historical memberships in import mode spaces.'
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    reason: untriaged-bulk-generation
+    detail: spec was generated from proto definition; verify refs, omissions, and KRM conventions
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    reason: identity-not-in-cai
+    detail: template "//chat.googleapis.com/spaces/{space}/messages/{message}" is not listed in docs/ai/metadata/cloudassetinventory_names.jsonl; verify the URL format or add an exception in pkg/gcpurls/registry_test.go
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    reason: identity-root-unknown
+    detail: pattern "spaces/{space}/messages/{message}" contains ancestor segment(s) spaces/{space} with no matching reference or field on ChatMessageSpec
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    reason: root-ref-not-modelled
+    detail: the root is spaces/{space}, and no SpaceRef type exists to point at; add the root resource first, then model this as a reference
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    reason: verify-resource-docs-link
+    detail: 'none of these loaded as a page ending in /v1/spaces.messages: https://docs.cloud.google.com/chat/api/reference/rest/v1/spaces.messages, https://docs.cloud.google.com/workspace/chat/docs/reference/rest/v1/spaces.messages, https://docs.cloud.google.com/chat/docs/reference/rest/v1/spaces.messages'
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.accessoryWidgets[].buttonList.buttons[].color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.accessoryWidgets[].buttonList.buttons[].onClick.card.sections[].widgets[].columns.columnItems[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.accessoryWidgets[].buttonList.buttons[].onClick.card.sections[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.accessoryWidgets[].buttonList.buttons[].onClick.card.sections[].widgets[].grid.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.accessoryWidgets[].buttonList.buttons[].onClick.card.sections[].widgets[].grid.items[].image.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.fixedFooter.primaryButton.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.fixedFooter.secondaryButton.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].buttonList.buttons[].color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].columns.columnItems[].widgets[].buttonList.buttons[].color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].columns.columnItems[].widgets[].decoratedText.button.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].columns.columnItems[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].decoratedText.button.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].grid.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.actionResponse.dialogAction.dialog.body.sections[].widgets[].grid.items[].image.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.attachment[].attachmentDataRef.resourceName
+    reason: possible-reference-by-description-loose
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cards
+    reason: deprecated-field
+    detail: the proto marks this field deprecated, so new Kinds leave it out of the Spec. If this Spec still has it, remove it by hand; add it back only if users still need it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.fixedFooter.primaryButton.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.fixedFooter.secondaryButton.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].buttonList.buttons[].color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].columns.columnItems[].widgets[].buttonList.buttons[].color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].columns.columnItems[].widgets[].decoratedText.button.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].columns.columnItems[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].decoratedText.button.color.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].decoratedText.icon
+    reason: deprecated-field
+    detail: the proto marks this field deprecated. It is kept because generated structs can be shared with other Kinds. Remove it by hand if no existing Kind uses it
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].grid.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].card.sections[].widgets[].grid.items[].image.borderStyle.strokeColor.alpha
+    reason: well-known-proto-type
+    detail: field uses well-known protobuf type google.protobuf.FloatValue, which was generated as struct FloatValue; confirm KRM representation
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.cardsV2[].cardID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.clientAssignedMessageID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .spec.privateMessageViewer.domainID
+    reason: possible-reference-by-name
+    detail: the field name ends in ID/IDs; confirm whether it references another resource
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .status.observedState.createTime
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.createTime. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.createTime if it is confirmed output only. Proto comment: Optional. Immutable. For spaces created in Chat, the time at which the message was created. This field is output only, except when used in import mode spaces. For import mode spaces, set this field to the historical timestamp at which the message was created in the source in order to preserve the original creation time.'
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .status.observedState.privateMessageViewer
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.privateMessageViewer. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.privateMessageViewer if it is confirmed output only. Proto comment: Optional. Immutable. Input for creating a message, otherwise output only. The user that can view the message. When set, the message is private and only visible to the specified user and the Chat app. To include this field in your request, you must call the Chat API using [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and omit the following: * [Attachments](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.attachments) * [Accessory widgets](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#Message.AccessoryWidget) For details, see [Send a message privately](https://developers.google.com/workspace/chat/create-messages#private).'
+    status: open
+  - kind: ChatMessage
+    group: chat.cnrm.cloud.google.com
+    field: .status.observedState.thread.threadKey
+    reason: possible-output-only-pattern-in-comment
+    detail: 'proto comment mentions output only but doesn''t start with "Output only." or "[Output Only]", and there is no field_behavior annotation, so it was generated into the Spec at .spec.thread.threadKey. The comment may be a typo, apply only some of the time, or mean something else. Move the field to .status.observedState.thread.threadKey if it is confirmed output only. Proto comment: Optional. Input for creating or updating a thread. Otherwise, output only. ID for the thread. Supports up to 4000 characters. This ID is unique to the Chat app that sets it. For example, if multiple Chat apps create a message using the same thread key, the messages are posted in different threads. To reply in a thread created by a person or another Chat app, specify the thread `name` field instead.'
+    status: open
