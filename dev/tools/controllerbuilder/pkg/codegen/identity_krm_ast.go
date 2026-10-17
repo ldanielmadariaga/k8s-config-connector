@@ -405,8 +405,18 @@ func (g *IdentityGenerator) resolveSpecAncestors(plan *IdentityPlan, typeInfo *k
 	}
 
 	var unknownAncestors []string
+	hasLocation := false
 	for _, af := range ancestorFields {
-		res, known := resolveSingleAncestor(af, typeInfo)
+		var res AncestorResolution
+		var known bool
+		if hasLocation && isLocationCollection(af.Collection) {
+			res, known = resolveCustomCollectionAncestor(af, typeInfo.SpecFields)
+		} else {
+			res, known = resolveSingleAncestor(af, typeInfo)
+			if res.Source == AncestorLocation {
+				hasLocation = true
+			}
+		}
 		plan.Ancestors = append(plan.Ancestors, res)
 		if !known {
 			unknownAncestors = append(unknownAncestors, af.Collection+"/{"+af.RawPlaceholder+"}")

@@ -185,6 +185,14 @@ PROTO_FILES=(
     ${VERSION_DIR}/google/container/*/*.proto
     ${VERSION_DIR}/google/privacy/dlp/v2/*.proto
     ${VERSION_DIR}/grafeas/v1/*.proto
+    ${VERSION_DIR}/google/ads/admanager/*/*.proto
+    ${VERSION_DIR}/google/ads/datamanager/*/*.proto
+    ${VERSION_DIR}/google/apps/events/subscriptions/*/*.proto
+    ${VERSION_DIR}/google/chat/*/*.proto
+    ${VERSION_DIR}/google/devicesandservices/health/*/*.proto
+    ${VERSION_DIR}/google/devtools/resultstore/*/*.proto
+    ${VERSION_DIR}/google/iam/v3/*.proto
+    ${VERSION_DIR}/google/shopping/merchant/*/*/*.proto
 )
 # Disable nullglob shell option to restore the default shell globbing behavior
 shopt -u nullglob
